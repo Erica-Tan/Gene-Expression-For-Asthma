@@ -1,4 +1,0 @@
-[core]
-    remote = localremote
-['remote "localremote"']
-    url = /media/imagr/My Passport/my files/dataset/gene_expression
