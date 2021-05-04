@@ -26,28 +26,28 @@ sc = StandardScaler()
 transformed_train_x = sc.fit_transform(train_x)
 transformed_test_x = sc.transform(test_x)
 
-# Visualize data using Principal Component Analysis.
-print("Principal Component Analysis (PCA)")
-pca = PCA(n_components=2).fit_transform(transformed_train_x)
-pca_df = pd.DataFrame(data=pca, columns=['PC1', 'PC2'])
-pca_df = pca_df.join(pd.DataFrame(data=train_y, columns=['Class']))
-
-palette = sns.color_palette("muted", n_colors=2)
-sns.set_style("white")
-sns.scatterplot(x='PC1', y='PC2', hue='Class', data=pca_df, palette=palette, linewidth=0.2, s=30, alpha=1).set_title(
-    'PCA')
-plt.show()
-
-# Visualize data using t-SNE.
-print("t-Distributed Stochastic Neighbor Embedding (tSNE)")
-model = TSNE(learning_rate=10, n_components=2, random_state=123, perplexity=30)
-tsne = model.fit_transform(transformed_train_x)
-tsne_df = pd.DataFrame(data=tsne, columns=['t-SNE1', 't-SNE2']).join(pd.DataFrame(data=train_y, columns=['Class']))
-palette = sns.color_palette("muted", n_colors=2)
-sns.set_style("white")
-sns.scatterplot(x='t-SNE1', y='t-SNE2', hue='Class', data=tsne_df, palette=palette, linewidth=0.2, s=30,
-                alpha=1).set_title('t-SNE')
-plt.show()
+# # Visualize data using Principal Component Analysis.
+# print("Principal Component Analysis (PCA)")
+# pca = PCA(n_components=2).fit_transform(transformed_train_x)
+# pca_df = pd.DataFrame(data=pca, columns=['PC1', 'PC2'])
+# pca_df = pca_df.join(pd.DataFrame(data=train_y, columns=['Class']))
+#
+# palette = sns.color_palette("muted", n_colors=2)
+# sns.set_style("white")
+# sns.scatterplot(x='PC1', y='PC2', hue='Class', data=pca_df, palette=palette, linewidth=0.2, s=30, alpha=1).set_title(
+#     'PCA')
+# plt.show()
+#
+# # Visualize data using t-SNE.
+# print("t-Distributed Stochastic Neighbor Embedding (tSNE)")
+# model = TSNE(learning_rate=10, n_components=2, random_state=123, perplexity=30)
+# tsne = model.fit_transform(transformed_train_x)
+# tsne_df = pd.DataFrame(data=tsne, columns=['t-SNE1', 't-SNE2']).join(pd.DataFrame(data=train_y, columns=['Class']))
+# palette = sns.color_palette("muted", n_colors=2)
+# sns.set_style("white")
+# sns.scatterplot(x='t-SNE1', y='t-SNE2', hue='Class', data=tsne_df, palette=palette, linewidth=0.2, s=30,
+#                 alpha=1).set_title('t-SNE')
+# plt.show()
 
 # feature extraction
 print("Feature selection")
@@ -78,6 +78,8 @@ pred_y = clf.predict(selected_test_x)
 print(f"accuracy: {accuracy_score(test_y, pred_y)}")
 
 # plot confusion matrix
+print(test_y, pred_y)
 cm = confusion_matrix(test_y, pred_y)
-sns.heatmap(cm, center=True)
+print(cm)
+sns.heatmap(cm, annot=True)
 plt.show()
