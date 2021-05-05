@@ -9,12 +9,13 @@ labels = []
 print("GSM example:")
 for i, (gsm_name, gsm) in enumerate(gse.gsms.items()):
     print("Name: ", gsm_name)
+    print(gsm.metadata)
+
     for key, value in gsm.metadata.items():
         if key == 'characteristics_ch1' and value[0] in label_list:
 
             labels.append(value[0])
 
-            # print ("Table data:",)
             df = gsm.table
 
             columns = df["ID_REF"].to_numpy()
@@ -29,13 +30,14 @@ for i, (gsm_name, gsm) in enumerate(gse.gsms.items()):
 
             h_sa_comb = h_sa_comb.append(df)
 
-h_sa_comb.index = labels
 
-# fill NaN values with mesn of each gene
-h_sa_comb.fillna(h_sa_comb.mean())
+print("Finish ...")
+
+h_sa_comb.index = labels
 
 nRow, nCol = h_sa_comb.shape
 print(f'There are {nRow} samples and {nCol} features in dataframe.')
 
 # save csv dataset
+print("Saving csv file")
 h_sa_comb.to_csv("./dataset/GSE69683_series.csv")

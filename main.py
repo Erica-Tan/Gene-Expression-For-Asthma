@@ -18,6 +18,9 @@ h_sa_comb = pd.read_csv('./dataset/GSE69683_series.csv', index_col='Unnamed: 0')
 labelencoder_X = LabelEncoder()
 h_sa_labels = labelencoder_X.fit_transform(np.array(h_sa_comb.index, dtype='str'))
 
+# fill NaN values with mesn of each gene
+h_sa_comb.fillna(h_sa_comb.mean())
+
 # split data into testing and training samples
 train_x, test_x, train_y, test_y = train_test_split(h_sa_comb, h_sa_labels, test_size=0.2, random_state=0)
 
@@ -26,28 +29,28 @@ sc = StandardScaler()
 transformed_train_x = sc.fit_transform(train_x)
 transformed_test_x = sc.transform(test_x)
 
-# # Visualize data using Principal Component Analysis.
-# print("Principal Component Analysis (PCA)")
-# pca = PCA(n_components=2).fit_transform(transformed_train_x)
-# pca_df = pd.DataFrame(data=pca, columns=['PC1', 'PC2'])
-# pca_df = pca_df.join(pd.DataFrame(data=train_y, columns=['Class']))
-#
-# palette = sns.color_palette("muted", n_colors=2)
-# sns.set_style("white")
-# sns.scatterplot(x='PC1', y='PC2', hue='Class', data=pca_df, palette=palette, linewidth=0.2, s=30, alpha=1).set_title(
-#     'PCA')
-# plt.show()
-#
-# # Visualize data using t-SNE.
-# print("t-Distributed Stochastic Neighbor Embedding (tSNE)")
-# model = TSNE(learning_rate=10, n_components=2, random_state=123, perplexity=30)
-# tsne = model.fit_transform(transformed_train_x)
-# tsne_df = pd.DataFrame(data=tsne, columns=['t-SNE1', 't-SNE2']).join(pd.DataFrame(data=train_y, columns=['Class']))
-# palette = sns.color_palette("muted", n_colors=2)
-# sns.set_style("white")
-# sns.scatterplot(x='t-SNE1', y='t-SNE2', hue='Class', data=tsne_df, palette=palette, linewidth=0.2, s=30,
-#                 alpha=1).set_title('t-SNE')
-# plt.show()
+# Visualize data using Principal Component Analysis.
+print("Principal Component Analysis (PCA)")
+pca = PCA(n_components=2).fit_transform(transformed_train_x)
+pca_df = pd.DataFrame(data=pca, columns=['PC1', 'PC2'])
+pca_df = pca_df.join(pd.DataFrame(data=train_y, columns=['Class']))
+
+palette = sns.color_palette("muted", n_colors=2)
+sns.set_style("white")
+sns.scatterplot(x='PC1', y='PC2', hue='Class', data=pca_df, palette=palette, linewidth=0.2, s=30, alpha=1).set_title(
+    'PCA')
+plt.show()
+
+# Visualize data using t-SNE.
+print("t-Distributed Stochastic Neighbor Embedding (tSNE)")
+model = TSNE(learning_rate=10, n_components=2, random_state=123, perplexity=30)
+tsne = model.fit_transform(transformed_train_x)
+tsne_df = pd.DataFrame(data=tsne, columns=['t-SNE1', 't-SNE2']).join(pd.DataFrame(data=train_y, columns=['Class']))
+palette = sns.color_palette("muted", n_colors=2)
+sns.set_style("white")
+sns.scatterplot(x='t-SNE1', y='t-SNE2', hue='Class', data=tsne_df, palette=palette, linewidth=0.2, s=30,
+                alpha=1).set_title('t-SNE')
+plt.show()
 
 # feature extraction
 print("Feature selection")
