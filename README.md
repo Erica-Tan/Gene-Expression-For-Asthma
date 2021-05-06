@@ -20,15 +20,14 @@ There were 498 samples in total, split into four cohorts:
 3. Severe asthma, non-smoking (246 samples)
 4. Severe asthma, smoking (88 samples)
 
-This study focus on binary classification of non-smoking and smoking severe asthmatics. 
-The purpose was to determine if smoking caused significant enough effects on gene expression to allow high performance classification.
-
+This study focuses on binary classification of non-asthmatics and severe non-smoking asthmatics. 
+The purpose was to determine what differences in gene expression were present in severe asthmatics compared to health individuals
 
 ## Data Preprocessing
 
 Convert the dataset to csv format 
    
-    python process.py
+    python convert_to_csv.py
     
 ## Training
 
